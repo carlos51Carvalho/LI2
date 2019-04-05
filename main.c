@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "estado.h"
 
-
+const VALOR inv[] = {VAZIA,VALOR_O,VALOR_X};
 int main()
 {
     ESTADO e = {0};
