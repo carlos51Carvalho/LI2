@@ -1,39 +1,35 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "estado.h"
 #include <ctype.h>
+#include "auxiliares.h"
 
-ESTADO joga (ESTADO e, int x, int y) {
-        do {gets(linha);
-            switch(toupper(linha[0]) {
+ESTADO joga (ESTADO e) {
+        char linha[256];
+        int i;
+        fgets(linha,256,stdin);
+            switch(toupper(linha[0])) {
                 case 'N': {
-                    scanf(linha, "%c %c", &c1 & c2)
-                    if (c2 == 'x') {
-                        e = inc(e, VALOR_X);
-                        e = inc(e, VALOR_O);
-                    } else break;
+                    e = reset(e,linha);
+                    break;
                 }
                 case 'J': {
-                    scanf(linha, "%c %d %d", &c1, &x, &y);
-                    e = jogar(e, x, y);
                     break;
                 }
-                case 'O':
-                    break;
+                case 'Q':
+                    exit(0);
 
                 default: {
                     printf("comando invalido \n");
                     break;
                 }
             }
-        } while (toupper(linha[0])!='Q')
-}
+        }
 
 
-void jogar (ESTADO e,int x, int y){
+/*void jogar (ESTADO e,int x, int y){
+}*/
 
-    }
-
-}
 // exemplo de uma função para imprimir o estado (Tabuleiro)
 void printa(ESTADO e)
 {
