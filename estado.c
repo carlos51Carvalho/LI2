@@ -14,10 +14,7 @@ ESTADO joga (ESTADO e) {
                     break;
                 }
                 case 'J': {
-                    e = jogada(e,linha);
-                    printf("\n");
-                    printa(e);
-                    printf("\n");
+                    e = jogada(e,&linha[2);
                     break;
                 }
                 case 'Q':
