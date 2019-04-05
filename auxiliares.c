@@ -3,6 +3,7 @@
 #include "estado.h"
 #include <ctype.h>
 #include "auxiliares.h"
+#include "estado.h"
 
 ESTADO reset (ESTADO e,char linha[]) {
     int i, j;
@@ -46,29 +47,60 @@ ESTADO jogada (ESTADO e, char linha[]){
 
 
 
-int valida( ESTADO e, int l, int c) {
-    int i, j, r = 0;
-    if (e.grelha[l - 1][c] != e.peca || e.grelha[l + 1][c] != e.peca || e.grelha[l - 1][c - 1] != e.peca ||
-        e.grelha[l - 1][c + 1] != e.peca || e.grelha[l + 1][c - 1] != e.peca || e.grelha[l + 1][c + 1] != e.peca ||
-        e.grelha[l - 1][c] != e.peca || e.grelha[l][c - 1] != e.peca || e.grelha[l][c + 1] != e.peca) {
-        r = 1;
-    }
-    if (r = 1) {
-        //coluna para cima
-        for (i = l; i > 0; --i) {
-            if (e.grelha[i - 1][c] == e.peca) {
-                r = 1;
-            }else r=0;
-        }//coluna para baixo
-        for (i = l; i < 8; ++i) {
-            if (e.grelha[i + 1][c] == e.peca) {
-                r = 1;
-            }
-        }//linha para a esquerda
-        for (i = c; i > 0; --i) {
-            if (e.grelha[l][c - 1] == e.peca) {
-                r = 1;
+int valida (ESTADO e, int l, int c) {
+    int r=0;
+    int i=l, j=c;
+    while (i>=0 && e.grelha[i][j]==inv[e.peca]){i--;} //NORTE
+        if (e.grelha[i][j]==e.peca) r=1;
+        else {
+            i = l;
+            while (i < 8 && e.grelha[i][j] == inv[e.peca]) { i++; } //SUL
+            if (e.grelha[i][j] == e.peca) r = 1;
+            else {
+                i = l;
+                while (j >= 0 && e.grelha[i][j] == inv[e.peca]) { j--; } //OESTE
+                if (e.grelha[i][j] == e.peca) r = 1;
+                else {
+                    j = c;
+                    while (j < 8 && e.grelha[i][j] == inv[e.peca]) { j++; } //ESTE
+                    if (e.grelha[i][j] == e.peca) r = 1;
+                    else {
+                        j = c;
+                        while (i >= 0 && j >= 0 && e.grelha[i][j] == inv[e.peca]) {
+                            i--;
+                            j--;
+                        } //NOROESTE
+                        if (e.grelha[i][j] == e.peca) r = 1;
+                        else {
+                            i = l;
+                            j = c;
+                            while (i >= 0 && j < 8 && e.grelha[i][j] == inv[e.peca]) {
+                                i--;
+                                j++;
+                            } //NORDESTE
+                            if (e.grelha[i][j] == e.peca) r = 1;
+                            else {
+                                j = c;
+                                while (i < 8 && j >= 0 && e.grelha[i][j] == inv[e.peca]) {
+                                    i++;
+                                    j--;
+                                } //SUDOESTE
+                                if (e.grelha[i][j] == e.peca) r = 1;
+                                else {
+                                    j = c;
+                                    while (i < 8 && j < 8 && e.grelha[i][j] == inv[e.peca]) {
+                                        i++;
+                                        j++;
+                                    } //SUDESTE
+                                    if (e.grelha[i][j] == e.peca) r = 1;
+                                    else {r=0;}
+                                }
+                            }
+                        }
+
+                    }
+                }
             }
         }
-    }
+    return r;
 }
