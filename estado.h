@@ -16,14 +16,14 @@ typedef enum {VAZIA, VALOR_X, VALOR_O} VALOR;
 Estrutura que armazena o estado do jogo
 */
 typedef struct estado {
-    VALOR peça; // peça do jogador que vai jogar!
+    VALOR peca; // peça do jogador que vai jogar!
     VALOR grelha[8][8];
     char modo; // modo em que se está a jogar! 0-> manual, 1-> contra computador
 } ESTADO;
 
 
 void printa(ESTADO);
-ESTADO joga (ESTADO, int x, int y)
+ESTADO joga (ESTADO e);
 
 
 #endif //PROJ_ESTADO_H
