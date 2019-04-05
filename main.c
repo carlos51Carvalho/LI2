@@ -5,6 +5,17 @@
 int main()
 {
     ESTADO e = {0};
+    while (1) {
+        printf("Reversi >");
+        e = joga(e);
+    }
+}
+
+
+
+
+
+    /*ESTADO e = {0};
 
 
     // estado inicial do tabuleiro. Inicio do jogo!
@@ -22,4 +33,4 @@ int main()
     printf("\n");
 
     return 0;
-}
+}*/
