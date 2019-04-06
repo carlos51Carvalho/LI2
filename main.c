@@ -1,36 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "estado.h"
+#include <ctype.h>
+#include "auxiliares.h"
+
 
 const VALOR inv[] = {VAZIA,VALOR_O,VALOR_X};
-int main()
-{
+
+int main() {
+    char linha[256];
+    int i;
     ESTADO e = {0};
-    while (1) {
-        printf("Reversi >");
-        e = joga(e);
+    do {
+        printf("Reversi> ");
+        fgets(linha, 256, stdin);
+        switch (toupper(linha[0])) {
+            case 'N': {
+                e = reset(e, linha);
+                printf("\n");
+                printa(e);
+                printf("\n");
+                break;
+            }
+            case 'J': {
+                e = jogada(e, &linha[2]);
+                printf("\n");
+                printa(e);
+                printf("\n");
+
+                break;
+            }
+            case 'Q':
+                exit(0);
+
+            default: {
+                printf("comando invalido \n");
+                break;
+            }
+        }
     }
+        while (toupper(linha[0]) != 'Q');
+        return 0;
 }
 
-
-
-
-
-    /*ESTADO e = {0};
-
-
-    // estado inicial do tabuleiro. Inicio do jogo!
-    e.grelha[3][4] = VALOR_X;
-    e.grelha[4][3] = VALOR_X;
-    e.grelha[3][3] = VALOR_O;
-    e.grelha[4][4] = VALOR_O;
-
-
-    //e.grelha[2][2] = VALOR_X;
-
-
-    printf("\n");
-    printa(e);
-    printf("\n");
-
-    return 0;
-}*/
