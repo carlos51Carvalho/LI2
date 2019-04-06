@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "estado.h"
+#include <ctype.h>
+#include "auxiliares.h"
+
 ESTADO reset (ESTADO e,char linha[]) {
     int i, j;
     for (i = 0; linha[i] != toupper('x') && linha[i] != toupper('o'); i++) {
@@ -16,9 +22,7 @@ ESTADO reset (ESTADO e,char linha[]) {
     e.grelha[4][3] = VALOR_X;
     e.grelha[3][3] = VALOR_O;
     e.grelha[4][4] = VALOR_O;
-    printf("\n");
-    printa(e);
-    printf("\n");
+
     return e;
 }
 
@@ -172,33 +176,18 @@ ESTADO jogada (ESTADO e, char linha[]){
     int i,j,l,c;
     sscanf(linha, "%d %d", &l,&c);
 
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            e.grelha[i][j] = VAZIA;
-        }
-    }
-
-    e.grelha[3][4] = VALOR_X;
-    e.grelha[4][3] = VALOR_X;
-    e.grelha[3][3] = VALOR_O;
-    e.grelha[4][4] = VALOR_O;
-
-    if (valida(e,l-1,c-1) == 1){
+    //if (valida(e,l-1,c-1) == 1){
         if (e.peca==VALOR_O){
             e.grelha[l-1][c-1]=VALOR_O;
         }else {
             e.grelha[l-1][c-1]=VALOR_X;
         }
-    }else printf("A jogada não é valida");
+    //}else printf("A jogada não é valida");
 
 
-    jogar(e,l-1,c-1);
+   //jogar(e,l-1,c-1);
 
+    //printf("%d \n", valida(e, l-1,c-1));
 
-    printf("\n");
-    printa(e);
-    printf("\n");
     return e;
 }
-
-
