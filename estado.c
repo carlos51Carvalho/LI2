@@ -4,29 +4,37 @@
 #include <ctype.h>
 #include "auxiliares.h"
 
-ESTADO joga (ESTADO e) {
-        char linha[256];
-        int i;
-        fgets(linha,256,stdin);
-            switch(toupper(linha[0])) {
-                case 'N': {
-                    e = reset(e,linha);
-                    break;
-                }
-                case 'J': {
-                    e = jogada(e,&linha[2);
-                    break;
-                }
-                case 'Q':
-                    exit(0);
-
-                default: {
-                    printf("comando invalido \n");
-                    break;
-                }
-            }
+/*ESTADO joga (ESTADO e) {
+    char linha[256];
+    int i;
+    ESTADO e = {0};
+    fgets(linha,256,stdin);
+    switch(toupper(linha[0])) {
+        case 'N': {
+            e = reset(e,linha);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            break;
         }
+        case 'J': {
+            e = jogada(e, &linha[2]);
+            printf("\n");
+            printa(e);
+            printf("\n");
 
+            break;
+        }
+        case 'Q':
+            exit(0);
+
+        default: {
+            printf("comando invalido \n");
+            break;
+        }
+    }
+}
+*/
 
 /*void jogar (ESTADO e,int x, int y){
 }*/
@@ -60,4 +68,5 @@ void printa(ESTADO e)
     }
 
 }
+
 
