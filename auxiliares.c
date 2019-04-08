@@ -233,14 +233,14 @@ ESTADO jogar (ESTADO e, int l, int c) {
     return e;
 }
 
-/*ESTADO posvalidas (ESTADO e, int l, int c) {
+ESTADO posvalidas (ESTADO e, int l, int c) {
     for(l=0; l<8 ; l++){
         for(c=0; c<8; c++){
             if(valida(e,l,c)==1) {e.grelha[l][c]='.';}
         }
     }
     return e;
-}*/
+}
 
 ESTADO jogada (ESTADO e, char linha[]){
     int i,j,l,c;
