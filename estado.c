@@ -1,49 +1,49 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "estado.h"
 #include <ctype.h>
 #include "auxiliares.h"
 
-/*ESTADO joga (ESTADO e) {
-    char linha[256];
-    int i;
-    ESTADO e = {0};
-    fgets(linha,256,stdin);
-    switch(toupper(linha[0])) {
-        case 'N': {
-            e = reset(e,linha);
-            printf("\n");
-            printa(e);
-            printf("\n");
-            break;
-        }
-        case 'J': {
-            e = jogada(e, &linha[2]);
-            printf("\n");
-            printa(e);
-            printf("\n");
-
-            break;
-        }
-        case 'Q':
-            exit(0);
-
-        default: {
-            printf("comando invalido \n");
-            break;
-        }
-    }
-}
-*/
-
-/*void jogar (ESTADO e,int x, int y){
-}*/
 
 // exemplo de uma função para imprimir o estado (Tabuleiro)
+
+ESTADO reset (ESTADO e,char linha[]) {
+    int i=1, j;
+    while (linha[i]==' ')
+        i++;
+    if (toupper(linha[i]) == 'A'){
+        e.modo = 1;
+        i++;
+        while (linha[i]==' ')
+            i++;
+        if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
+        else e.peca = VALOR_O;
+    }
+    else {e.modo=0;
+        if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
+        else e.peca = VALOR_O;
+    }
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            e.grelha[i][j] = VAZIA;
+        }
+    }
+
+    e.grelha[3][4] = VALOR_X;
+    e.grelha[4][3] = VALOR_X;
+    e.grelha[3][3] = VALOR_O;
+    e.grelha[4][4] = VALOR_O;
+
+    return e;
+}
+
 void printa(ESTADO e)
 {
     char c = ' ';
-
+    if (e.peca== VALOR_X) printf("Jogador X\n");
+    else printf("Jogador O \n");
+    if (e.modo == 0) printf("Manual\n");
+    else printf("Automatico\n\n");
 
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -68,5 +68,85 @@ void printa(ESTADO e)
     }
 
 }
+
+
+
+
+
+
+
+ESTADO ler(ESTADO e, char s[]) {
+    char s1;
+    FILE *reversi = fopen(s, "r");
+
+    fscanf(reversi,"%c ", &s1 );
+
+    if (toupper(s1) == 'A') e.modo=1;
+    else e.modo=0;
+
+    fscanf(reversi,"%c ", &s1 );
+
+    if (toupper(s1) == 'X') e.peca = VALOR_X;
+    else e.peca = VALOR_O;
+
+    for (int i = 0; i <8 ; i++){
+        for (int j = 0; j < 8 ; ++j) {
+            fscanf(reversi, "%c ",&s1);
+            if (s1 == 'X') e.grelha[i][j]=VALOR_X;
+            else if (s1 == 'O') e.grelha[i][j]=VALOR_O;
+            else e.grelha[i][j]=VAZIA;
+
+        }
+    }
+    fclose(reversi);
+    return e;
+
+}
+
+ESTADO escrever(ESTADO e, char s[]) {
+    char s1,s2;
+    FILE *reversi = fopen(s, "W");
+
+    if (e.modo=1) s1 = 'A';
+    else s1 = 'M';
+
+    if (e.peca == VALOR_X) s2 = 'X';
+    else s2 = 'O';
+
+    fprintf(reversi,"%c %c ", s1,s2 );
+
+    for (int i = 0; i <8 ; i++){
+        for (int j = 0; j < 8 ; ++j) {
+            if (e.grelha[i][j]=VALOR_X) s1 = 'X';
+            else if (e.grelha[i][j]=VALOR_O) s1 = 'O';
+            else s1 = '-';
+            fprintf(reversi,"%c ", s1);
+
+        }
+    }
+    fclose(reversi);
+    return e;
+
+}
+
+ESTADO jogada (ESTADO e, char linha[]){
+    int i,j,l,c;
+    sscanf(linha, "%d %d", &l,&c);
+
+    if (valida(e,l-1,c-1) == 1){
+
+        if (e.peca==VALOR_O){
+            e.grelha[l-1][c-1]=VALOR_O;
+        }else {
+        e.grelha[l-1][c-1]=VALOR_X;
+        }
+    }
+
+
+    jogar(e,l-1,c-1);
+
+    //printf("%d \n", valida(e, l-1,c-1));
+
+    return e;
 
 
