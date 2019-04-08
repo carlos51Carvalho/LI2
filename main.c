@@ -9,7 +9,9 @@ const VALOR inv[] = {VAZIA,VALOR_O,VALOR_X};
 
 int main() {
     char linha[256];
+    char c;
     int i;
+    char s[256];
     ESTADO e = {0};
     do {
         printf("Reversi> ");
@@ -29,6 +31,20 @@ int main() {
                 printf("\n");
 
                 break;
+            }
+            case 'L':{
+                sscanf(linha,"%c %s", &c, s);
+                e = ler(e,s);
+                printa(e);
+            }
+            case 'E':{
+                sscanf(linha,"%c %s", &c, s);
+                e = escrever(e,s);
+                printa(e);
+            }
+            case 'S':{
+                e = posvalidas(e);
+                printa(e);
             }
             case 'Q':
                 exit(0);
