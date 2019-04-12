@@ -5,55 +5,6 @@
 #include "auxiliares.h"
 #include "estado.h"
 
-/*ESTADO reset (ESTADO e,char linha[]) {
-    int i, j;
-    for (i = 0; linha[i] != toupper('x') && linha[i] != toupper('o'); i++) {
-        if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
-        else if (toupper(linha[i]) == 'O') e.peca = VALOR_O;
-        else e.peca = VAZIA;
-    }
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            e.grelha[i][j] = VAZIA;
-        }
-    }
-
-            e.grelha[3][4] = VALOR_X;
-            e.grelha[4][3] = VALOR_X;
-            e.grelha[3][3] = VALOR_O;
-            e.grelha[4][4] = VALOR_O;
-            printf("\n");
-            printa(e);
-            printf("\n");
-            return e;
-}
-*/
-ESTADO jogada (ESTADO e, char linha[]){
-    int i,j,l,c;
-    sscanf(linha, "%d %d", &l,&c);
-
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            e.grelha[i][j] = VAZIA;
-        }
-    }
-
-    if (e.peca==VALOR_O){
-        e.grelha[l-1][c-1]=VALOR_O;
-    }else {
-        e.grelha[l-1][c-1]=VALOR_X;
-    }
-
-    e.grelha[3][4] = VALOR_X;
-    e.grelha[4][3] = VALOR_X;
-    e.grelha[3][3] = VALOR_O;
-    e.grelha[4][4] = VALOR_O;
-
-    printf("\n");
-    printa(e);
-    printf("\n");
-    return e;
-}
 
 int validaNorte (ESTADO e, int l, int c){
     int r=0,i=l-1,j=c;
@@ -125,7 +76,7 @@ int validaNoroeste (ESTADO e, int l, int c){
     else h=VAZIA;
     if(e.grelha[l][c]!=VAZIA) r=0;
     else {
-        if (l <= 2 && c <= 2) {
+        if (l >= 2 && c >= 2) {
             if (e.grelha[i][j] == e.peca)r = 0;
             else {
                 while (i > 0 && j > 0 && e.grelha[i][j] == h) { i--, j--; }
@@ -179,10 +130,10 @@ int validaSudeste (ESTADO e, int l, int c){
     else h=VAZIA;
     if(e.grelha[l][c]!=VAZIA) r=0;
     else {
-        if (l <= 5 && c <= 5) {
+        if (l < 6 && c < 6) {
             if (e.grelha[i][j] == e.peca)r = 0;
             else {
-                while (i < 7 && j < 7 && e.grelha[i][j] == h) { i++, j++; }
+                while (i < 7 && j < 7 && e.grelha[i][j] == h) { i++, j++;}
                 if (e.grelha[i][j] == e.peca) r = 1;
             }
         }
@@ -210,67 +161,59 @@ ESTADO jogar (ESTADO e, int l, int c) {
     if (e.peca == VALOR_X) h = VALOR_O;
     else if(e.peca==VALOR_O) h = VALOR_X;
     else h=VAZIA;
-    if (valida(e, l, c) == 1) {
-        if (validaNorte(e, l, c)) {
+    if(valida(e,l,c)==0) printf("JOGADA INVALIDA \n");
+    else {
+    if (validaNorte(e, l, c)) {
             i = l - 1;
             j = c;
-            e.grelha[l][c]=e.peca;
-            for (;e.grelha[i][j] == h; i--) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaSul(e, l, c)==1) {
+            for (; e.grelha[i][j] == h; i--) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaSul(e, l, c)) {
             i = l + 1;
             j = c;
-            e.grelha[l][c]=e.peca;
-            for (;e.grelha[i][j] == h; i++) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaOeste(e, l, c)==1) {
+            for (; e.grelha[i][j] == h; i++) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaOeste(e, l, c)) {
             i = l;
             j = c - 1;
-            e.grelha[l][c]=e.peca;
-            for (;e.grelha[i][j] == h; j--) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaEste(e, l, c)==1) {
+            for (; e.grelha[i][j] == h; j--) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaEste(e, l, c)) {
             i = l;
             j = c + 1;
-            e.grelha[l][c]=e.peca;
-            for (;e.grelha[i][j] == h; j++) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaNoroeste(e, l, c)==1) {
+            for (; e.grelha[i][j] == h; j++) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaNoroeste(e, l, c)) {
             i = l - 1;
             j = c - 1;
-            e.grelha[l][c]=e.peca;
             for (;e.grelha[i][j] == h; i--, j--) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaNordeste(e, l, c)==1) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaNordeste(e, l, c)) {
             i = l - 1;
             j = c + 1;
-            e.grelha[l][c]=e.peca;
             for (;e.grelha[i][j] == h; i--, j++) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaSudoeste(e, l, c)==1) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaSudoeste(e, l, c)) {
             i = l + 1;
             j = c - 1;
-            e.grelha[l][c]=e.peca;
-            for (;e.grelha[i][j] == h; i++, j--) {
-                e.grelha[i][j] = e.peca;
-            }
-        } else if (validaSudeste(e, l, c)==1){
+            for (; e.grelha[i][j] == h; i++, j--) {
+                e.grelha[i][j] = e.peca;}
+    }
+    if (validaSudeste(e, l, c)){
             i = l + 1;
             j = c + 1;
-            e.grelha[l][c]=e.peca;
             for (;e.grelha[i][j] == h; i++, j++) {
-                e.grelha[i][j] = e.peca;
-            }
-        }
-        if(e.peca==VALOR_X) e.peca=VALOR_O;
-        else e.peca=VALOR_X;
-    } else printf("JOGADA INVALIDA!");
+                e.grelha[i][j] = e.peca;}
+    }
+    e.grelha[l][c] = e.peca;}
+    if(e.peca==VALOR_X) e.peca=VALOR_O;
+    else e.peca=VALOR_X;
     return e;
 }
 
