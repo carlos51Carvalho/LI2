@@ -2,7 +2,7 @@
 #include "estado.h"
 #include <ctype.h>
 #include "auxiliares.h"
-
+#include <stdio.h>
 
 // exemplo de uma função para imprimir o estado (Tabuleiro)
 
@@ -45,8 +45,10 @@ void printa(ESTADO e)
     if (e.modo == 0) printf("Manual\n");
     else printf("Automatico\n\n");
 
+    printf("  0 1 2 3 4 5 6 7\n");
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
+            if (j == 0) printf("%d ",i);
             switch (e.grelha[i][j]) {
                 case VALOR_O: {
                     c = 'O';
@@ -103,11 +105,11 @@ ESTADO ler(ESTADO e, char s[]) {
 
 }
 
-ESTADO escrever(ESTADO e, char s[]) {
+void escrever(ESTADO e, char s[]) {
     char s1,s2;
     FILE *reversi = fopen(s, "W");
 
-    if (e.modo=1) s1 = 'A';
+    if (e.modo==1) s1 = 'A';
     else s1 = 'M';
 
     if (e.peca == VALOR_X) s2 = 'X';
@@ -117,36 +119,12 @@ ESTADO escrever(ESTADO e, char s[]) {
 
     for (int i = 0; i <8 ; i++){
         for (int j = 0; j < 8 ; ++j) {
-            if (e.grelha[i][j]=VALOR_X) s1 = 'X';
-            else if (e.grelha[i][j]=VALOR_O) s1 = 'O';
+            if (e.grelha[i][j]==VALOR_X) s1 = 'X';
+            else if (e.grelha[i][j]==VALOR_O) s1 = 'O';
             else s1 = '-';
             fprintf(reversi,"%c ", s1);
 
         }
     }
     fclose(reversi);
-    return e;
-
 }
-
-ESTADO jogada (ESTADO e, char linha[]){
-    int i,j,l,c;
-    sscanf(linha, "%d %d", &l,&c);
-
-    if (valida(e,l-1,c-1) == 1){
-
-        if (e.peca==VALOR_O){
-            e.grelha[l-1][c-1]=VALOR_O;
-        }else {
-        e.grelha[l-1][c-1]=VALOR_X;
-        }
-    }
-
-
-    jogar(e,l-1,c-1);
-
-    //printf("%d \n", valida(e, l-1,c-1));
-
-    return e;
-
-
