@@ -25,10 +25,13 @@ int main() {
                 break;
             }
             case 'J': {
-                e = jogada(e, &linha[2]);
+                int c1, c2;
+                sscanf(linha,"%c %d %d", &c ,&c1, &c2);
+                e = jogar(e,c1,c2);
                 printf("\n");
                 printa(e);
                 printf("\n");
+                printf("%d",valida(e,c1,c2));
 
                 break;
             }
@@ -36,15 +39,17 @@ int main() {
                 sscanf(linha,"%c %s", &c, s);
                 e = ler(e,s);
                 printa(e);
+                break;
             }
             case 'E':{
                 sscanf(linha,"%c %s", &c, s);
-                e = escrever(e,s);
+                escrever(e,s);
                 printa(e);
+                break;
             }
             case 'S':{
-                e = posvalidas(e);
-                printa(e);
+                posvalidas(e);
+                break;
             }
             case 'Q':
                 exit(0);
@@ -55,7 +60,6 @@ int main() {
             }
         }
     }
-        while (toupper(linha[0]) != 'Q');
-        return 0;
+    while (toupper(linha[0]) != 'Q');
+    return 0;
 }
-
