@@ -31,7 +31,7 @@ void printa(ESTADO);
 ESTADO reset(ESTADO e,char linha[]);
 ESTADO jogada(ESTADO e, char linha[]);
 ESTADO ler(ESTADO e, char s[]);
-ESTADO escrever(ESTADO e, char s[]);
+void escrever(ESTADO e, char s[]);
 
 //ESTADO joga (ESTADO, int x, int y)
 
