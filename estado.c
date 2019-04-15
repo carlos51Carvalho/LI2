@@ -159,37 +159,46 @@ ESTADO jogar (ESTADO e, int l, int c) {
         else e.peca=VALOR_X;
     }
     return e;
-}
+
+    
+    
 ESTADO ler(ESTADO e, char s[]) {
-    char s1;
+    char s1,s2;
     FILE *reversi = fopen(s, "r");
 
-    fscanf(reversi,"%c ", &s1 );
+    fscanf(reversi,"%c %c ", &s1,&s2 );
 
     if (toupper(s1) == 'A') e.modo=1;
     else e.modo=0;
 
-    fscanf(reversi,"%c ", &s1 );
-
-    if (toupper(s1) == 'X') e.peca = VALOR_X;
+    if(toupper(s2) == 'X') e.peca = VALOR_X;
     else e.peca = VALOR_O;
 
-    for (int i = 0; i <8 ; i++){
-        for (int j = 0; j < 8 ; ++j) {
+    for (int i = 0; i <8 ; i++)
+    {
+        for (int j = 0; j < 8 ; ++j)
+        {
             fscanf(reversi, "%c ",&s1);
-            if (s1 == 'X') e.grelha[i][j]=VALOR_X;
-            else if (s1 == 'O') e.grelha[i][j]=VALOR_O;
-            else e.grelha[i][j]=VAZIA;
+            if (s1 == 'X')
+                e.grelha[i][j]=VALOR_X;
+            else
+                if (s1 == 'O')
+                    e.grelha[i][j]=VALOR_O;
+                else
+                    e.grelha[i][j]=VAZIA;
 
         }
     }
+
     fclose(reversi);
+
     return e;
 
 }
+
 void escrever(ESTADO e, char s[]) {
     char s1,s2;
-    FILE *reversi = fopen(s, "W");
+    FILE *reversi = fopen(s, "w");
 
     if (e.modo==1) s1 = 'A';
     else s1 = 'M';
@@ -197,16 +206,19 @@ void escrever(ESTADO e, char s[]) {
     if (e.peca == VALOR_X) s2 = 'X';
     else s2 = 'O';
 
-    fprintf(reversi,"%c %c ", s1,s2 );
+    fprintf(reversi,"%c %c \n", s1,s2 );
 
-    for (int i = 0; i <8 ; i++){
-        for (int j = 0; j < 8 ; ++j) {
+    for (int i = 0; i <8 ; i++)
+    {
+        for (int j = 0; j < 8 ; ++j)
+        {
             if (e.grelha[i][j]==VALOR_X) s1 = 'X';
             else if (e.grelha[i][j]==VALOR_O) s1 = 'O';
             else s1 = '-';
             fprintf(reversi,"%c ", s1);
 
         }
+        fprintf(reversi,"\n");
     }
     fclose(reversi);
 }
