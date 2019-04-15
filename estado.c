@@ -5,6 +5,10 @@
 #include <stdio.h>
 
 // exemplo de uma função para imprimir o estado (Tabuleiro)
+
+
+
+
 void printa(ESTADO e) {
     char c = ' ';
     if (e.peca== VALOR_X) printf("Jogador X\n");
@@ -37,22 +41,16 @@ void printa(ESTADO e) {
     }
     printf("X = %d  O = %d ", numPecas_X(e), numPecas_O(e));
 }
+
+
+
 ESTADO reset (ESTADO e,char linha[]) {
     int i=1, j;
+    e.modo = 0;
     while (linha[i]==' ')
         i++;
-    if (toupper(linha[i]) == 'A'){
-        e.modo = 1;
-        i++;
-        while (linha[i]==' ')
-            i++;
         if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
         else e.peca = VALOR_O;
-    }
-    else {e.modo=0;
-        if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
-        else e.peca = VALOR_O;
-    }
 
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 8; j++) {
@@ -67,6 +65,48 @@ ESTADO reset (ESTADO e,char linha[]) {
 
     return e;
 }
+
+
+
+
+
+/*
+ESTADO automatico (ESTADO e,char linha[]) {
+    int i=1, j;
+    e.modo = 1;
+    while (linha[i]==' ')
+        i++;
+    if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
+    else e.peca = VALOR_O;
+
+    while (linha[i]==' ')
+        i++;
+        if (linha[i] == '1'){
+
+        }
+        else if (linha[i]=='2'){
+
+        }
+        else
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            e.grelha[i][j] = VAZIA;
+        }
+    }
+
+    e.grelha[3][4] = VALOR_X;
+    e.grelha[4][3] = VALOR_X;
+    e.grelha[3][3] = VALOR_O;
+    e.grelha[4][4] = VALOR_O;
+
+    return e;
+}
+
+
+*/
+
+
 void posvalidas (ESTADO e){
     int l,c;
     printf("  0 1 2 3 4 5 6 7\n");
@@ -102,66 +142,77 @@ ESTADO jogar (ESTADO e, int l, int c) {
     int i, j;
     VALOR h;
     if (e.peca == VALOR_X) h = VALOR_O;
-    else if(e.peca==VALOR_O) h = VALOR_X;
-    else h=VAZIA;
-    if (valida(e,l,c)==0);
+    else if (e.peca == VALOR_O) h = VALOR_X;
+    else h = VAZIA;
+    if (valida(e, l, c) == 0);
     else {
         if (validaNorte(e, l, c)) {
             i = l - 1;
             j = c;
             for (; e.grelha[i][j] == h; i--) {
-                e.grelha[i][j] = e.peca;}
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaSul(e, l, c)) {
             i = l + 1;
             j = c;
             for (; e.grelha[i][j] == h; i++) {
-                e.grelha[i][j] = e.peca;}
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaOeste(e, l, c)) {
             i = l;
             j = c - 1;
             for (; e.grelha[i][j] == h; j--) {
-                e.grelha[i][j] = e.peca;}
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaEste(e, l, c)) {
             i = l;
             j = c + 1;
             for (; e.grelha[i][j] == h; j++) {
-                e.grelha[i][j] = e.peca;}
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaNoroeste(e, l, c)) {
             i = l - 1;
             j = c - 1;
-            for (;e.grelha[i][j] == h; i--, j--) {
-                e.grelha[i][j] = e.peca;}
+            for (; e.grelha[i][j] == h; i--, j--) {
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaNordeste(e, l, c)) {
             i = l - 1;
             j = c + 1;
-            for (;e.grelha[i][j] == h; i--, j++) {
-                e.grelha[i][j] = e.peca;}
+            for (; e.grelha[i][j] == h; i--, j++) {
+                e.grelha[i][j] = e.peca;
+            }
         }
         if (validaSudoeste(e, l, c)) {
             i = l + 1;
             j = c - 1;
             for (; e.grelha[i][j] == h; i++, j--) {
-                e.grelha[i][j] = e.peca;}
+                e.grelha[i][j] = e.peca;
+            }
         }
-        if (validaSudeste(e, l, c)){
+        if (validaSudeste(e, l, c)) {
             i = l + 1;
             j = c + 1;
-            for (;e.grelha[i][j] == h; i++, j++) {
-                e.grelha[i][j] = e.peca;}
+            for (; e.grelha[i][j] == h; i++, j++) {
+                e.grelha[i][j] = e.peca;
+            }
         }
         e.grelha[l][c] = e.peca;
-        if(e.peca==VALOR_X) e.peca=VALOR_O;
-        else e.peca=VALOR_X;
+        if (e.peca == VALOR_X) e.peca = VALOR_O;
+        else e.peca = VALOR_X;
     }
     return e;
+}
 
-    
-    
+
+
+
+
 ESTADO ler(ESTADO e, char s[]) {
     char s1,s2;
     FILE *reversi = fopen(s, "r");
@@ -182,10 +233,10 @@ ESTADO ler(ESTADO e, char s[]) {
             if (s1 == 'X')
                 e.grelha[i][j]=VALOR_X;
             else
-                if (s1 == 'O')
-                    e.grelha[i][j]=VALOR_O;
-                else
-                    e.grelha[i][j]=VAZIA;
+            if (s1 == 'O')
+                e.grelha[i][j]=VALOR_O;
+            else
+                e.grelha[i][j]=VAZIA;
 
         }
     }
@@ -222,5 +273,4 @@ void escrever(ESTADO e, char s[]) {
     }
     fclose(reversi);
 }
-
 
