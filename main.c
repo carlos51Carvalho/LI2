@@ -47,20 +47,6 @@ int main() {
                 }
                 break;
             }
-            case 'L':{
-                sscanf(linha,"%c %s", &c, s);
-                e = ler(e,s);
-                printa(e);
-                printf("\n");
-                break;
-            }
-            case 'E':{
-                sscanf(linha,"%c %s", &c, s);
-                escrever(e,s);
-                printa(e);
-                printf("\n");
-                break;
-            }
             case 'S':{
                 posvalidas(e);
                 break;
@@ -71,6 +57,18 @@ int main() {
             }
             case 'U': {
                 e = undo(e, &st);
+                break;
+            }
+            case 'L':{
+                sscanf(linha,"%c %s", &c, s);
+                e =  ler(e,s);
+                printa(e);
+                printf("\n");
+                break;
+            }
+            case 'E':{
+                sscanf(linha,"%c %s", &c, s);
+                escrever(e,s);
                 break;
             }
             case 'Q':
