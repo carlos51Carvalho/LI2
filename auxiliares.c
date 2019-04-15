@@ -6,6 +6,8 @@
 #include "estado.h"
 
 
+//AUXILIARES VALIDA E JOGAR
+
 int validaNorte (ESTADO e, int l, int c){
     int r=0,i=l-1,j=c;
     VALOR h;
@@ -155,79 +157,92 @@ int valida (ESTADO e, int l, int c) {
     return r;
 }
 
-ESTADO jogar (ESTADO e, int l, int c) {
-    int i, j;
+
+
+//AUXILIARES PARA CONTAR NUMERO DE PEÇAS
+
+int numPecas_O (ESTADO e) {
+    int i,j,num=0;
+    for(i=0;i<8;i++){
+        for(j=0;j<8;j++){
+            if (e.grelha[i][j]==VALOR_O) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+int numPecas_X (ESTADO e) {
+    int i,j,num=0;
+    for(i=0;i<8;i++){
+        for(j=0;j<8;j++){
+            if (e.grelha[i][j]==VALOR_X) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+
+
+//Auxiliares FINALIZAR O JOGO
+
+int nenhumaValida (ESTADO e){
+    int i,j,r=1;
+    for (i=0; i<8; i++){
+        for(j=0; j<8; j++){
+            if(valida(e,i,j)==1) r=0;
+        }
+    }
+    return r;
+}
+
+int nenhumaVazia (ESTADO e){
+    int i,j,r=1;
+    for(i=0; i<8 ; i++){
+        for(j=0; j<8; j++){
+            if(e.grelha[i][i]==VALOR_X) r=0;
+            else if(e.grelha[i][i]==VALOR_O) r=0;
+        }
+    }
+    return r;
+}
+
+int finaliza (ESTADO e) {
+    int r = 0;
     VALOR h;
     if (e.peca == VALOR_X) h = VALOR_O;
     else if(e.peca==VALOR_O) h = VALOR_X;
     else h=VAZIA;
-    if(valida(e,l,c)==0) printf("JOGADA INVALIDA \n");
-    else {
-    if (validaNorte(e, l, c)) {
-            i = l - 1;
-            j = c;
-            for (; e.grelha[i][j] == h; i--) {
-                e.grelha[i][j] = e.peca;}
+    if (numPecas_O(e) == 0 || numPecas_X(e) == 0) r = 1;
+
+    if (nenhumaValida(e)==1) {
+        e.peca=h;
+        if(nenhumaValida(e)==1) r=1;
     }
-    if (validaSul(e, l, c)) {
-            i = l + 1;
-            j = c;
-            for (; e.grelha[i][j] == h; i++) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaOeste(e, l, c)) {
-            i = l;
-            j = c - 1;
-            for (; e.grelha[i][j] == h; j--) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaEste(e, l, c)) {
-            i = l;
-            j = c + 1;
-            for (; e.grelha[i][j] == h; j++) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaNoroeste(e, l, c)) {
-            i = l - 1;
-            j = c - 1;
-            for (;e.grelha[i][j] == h; i--, j--) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaNordeste(e, l, c)) {
-            i = l - 1;
-            j = c + 1;
-            for (;e.grelha[i][j] == h; i--, j++) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaSudoeste(e, l, c)) {
-            i = l + 1;
-            j = c - 1;
-            for (; e.grelha[i][j] == h; i++, j--) {
-                e.grelha[i][j] = e.peca;}
-    }
-    if (validaSudeste(e, l, c)){
-            i = l + 1;
-            j = c + 1;
-            for (;e.grelha[i][j] == h; i++, j++) {
-                e.grelha[i][j] = e.peca;}
-    }
-    e.grelha[l][c] = e.peca;}
-    if(e.peca==VALOR_X) e.peca=VALOR_O;
-    else e.peca=VALOR_X;
+
+    if (nenhumaVazia(e)==1) r=1;
+    return r;
+}
+
+void iniciarStack (ESTADO e,STACK *s) {
+    s -> sp = 0;
+    s -> estados[s->sp] = e;
+}
+
+void alterarStack (ESTADO e, STACK *s) {
+    s->sp++;
+    s->estados[s->sp] = e;
+}
+
+ESTADO undo (ESTADO e, STACK *s){
+    s->sp--;
+    e = s->estados[s->sp];
+    printf("\n");
+    printa(e);
+    printf("\n");
     return e;
 }
 
-void posvalidas (ESTADO e){
-    int l,c;
-    printf("  0 1 2 3 4 5 6 7\n");
-    for(l=0; l<8 ; l++){
-        for(c=0; c<8; c++){
-            if(c==0) printf("%d ",l);
-            if (e.grelha[l][c]==VALOR_X) printf("X ");
-            else if(e.grelha[l][c]==VALOR_O) printf("O ");
-            else if(valida(e,l,c)==1) printf(". ");
-            else printf("- ");
-        }
-     printf("\n");
-    }
-}
