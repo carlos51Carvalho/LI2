@@ -22,18 +22,15 @@ typedef struct estado {
 } ESTADO;
 
 
-ESTADO joga (ESTADO e);
 
 void printa(ESTADO);
-
-//ESTADO jogada (ESTADO e, char linha[])
-
 ESTADO reset(ESTADO e,char linha[]);
-ESTADO jogada(ESTADO e, char linha[]);
+void posvalidas (ESTADO e);
+void sugestao (ESTADO e);
+ESTADO jogar (ESTADO e, int l, int c);
 ESTADO ler(ESTADO e, char s[]);
 void escrever(ESTADO e, char s[]);
 
-//ESTADO joga (ESTADO, int x, int y)
 
 
 #endif //PROJ_ESTADO_H
