@@ -62,6 +62,7 @@ int main() {
             case 'L':{
                 sscanf(linha,"%c %s", &c, s);
                 e =  ler(e,s);
+                iniciarStack(e,&st);
                 printa(e);
                 printf("\n");
                 break;
