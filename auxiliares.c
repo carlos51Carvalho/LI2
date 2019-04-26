@@ -238,11 +238,13 @@ void alterarStack (ESTADO e, STACK *s) {
 }
 
 ESTADO undo (ESTADO e, STACK *s){
-    s->sp--;
-    e = s->estados[s->sp];
-    printf("\n");
-    printa(e);
-    printf("\n");
+    if (s->sp != 0) {
+        s->sp--;
+        e = s->estados[s->sp];
+        printf("\n");
+        printa(e);
+        printf("\n");
+    }
     return e;
 }
 
