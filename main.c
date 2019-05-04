@@ -1,8 +1,10 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "estado.h"
 #include <ctype.h>
 #include "auxiliares.h"
+#include "bot.h"
 
 
 
@@ -25,6 +27,13 @@ int main() {
                 iniciarStack(e,&st);
                 break;
             }
+            case 'A':{
+                e= automatico(e,linha);
+                printf("\n");
+                printa(e);
+                printf("\n");
+                iniciarStack(e,&st);
+            }
             case 'J': {
                 int c1, c2;
                 sscanf(linha,"%c %d %d", &c ,&c1, &c2);
@@ -32,18 +41,18 @@ int main() {
                 if (e.peca==VALOR_X) h = VALOR_O;
                 else if(e.peca==VALOR_O) h = VALOR_X;
                 else h=VAZIA;
-                if (nenhumaValida(e)==1){printf("Nao tem jogadas possiveis. Perdeu a sua vez.\n"); e.peca=h;}
-                if (valida(e, c1, c2) == 0) printf("Jogada Invalida. Tente outra jogada. \n");
+                if (nenhumaValida(e)==1){printf("Nao tem jogadas possiveis. Perdeu a sua vez.\n\n"); e.peca=h;}
+                if (valida(e, c1, c2) == 0) printf("Jogada Invalida. Tente outra jogada. \n\n");
                 else {
-                    e = jogar(e, c1, c2);
+                    e = jogar_geral(e, c1, c2);
                     printf("\n");
                     printa(e);
                     printf("\n");
                 }
                 alterarStack(e,&st);
-                if(finaliza(e)==1) { if (numPecas_O(e)>numPecas_X(e)) printf("O JOGADOR O GANHOU");
-                    else if(numPecas_X(e)>numPecas_O(e)) printf("O JOGADOR X GANHOU!");
-                    else printf("O JOGO EMPATOU");
+                if(finaliza(e)==1) { if (numPecas_O(e)>numPecas_X(e)) printf("O JOGADOR O GANHOU\n\n");
+                    else if(numPecas_X(e)>numPecas_O(e)) printf("O JOGADOR X GANHOU!\n\n");
+                    else printf("O JOGO EMPATOU\n\n");
                 }
                 break;
             }
@@ -83,4 +92,3 @@ int main() {
     }
     while (toupper(linha[0]) != 'Q');
     return 0;
-}
