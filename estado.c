@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "auxiliares.h"
 #include <stdio.h>
+#include "bot.h"
 
 // exemplo de uma função para imprimir o estado (Tabuleiro)
 
@@ -13,7 +14,7 @@ void printa(ESTADO e) {
     char c = ' ';
     if (e.peca== VALOR_X) printf("Jogador X\n");
     else printf("Jogador O \n");
-    if (e.modo == 0) printf("  Modo Manual\n");
+    if (e.modo == 0) printf("Manual\n");
     else printf("Automatico\n\n");
 
     printf("  0 1 2 3 4 5 6 7\n");
@@ -47,11 +48,11 @@ void printa(ESTADO e) {
 ESTADO reset (ESTADO e,char linha[]) {
     int i=1, j;
     e.modo = 0;
-    while (linha[i]==' ')
+    while (linha[i]==' ') {
         i++;
         if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
         else e.peca = VALOR_O;
-
+    }
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 8; j++) {
             e.grelha[i][j] = VAZIA;
@@ -209,7 +210,24 @@ ESTADO jogar (ESTADO e, int l, int c) {
     return e;
 }
 
+ESTADO jogar_geral (ESTADO e, int l, int c) {
+    VALOR h;
+    h = e.peca;
+    if (e.modo == 0) {
+        e = jogar(e, l, c);
+        printf("\n");
+        printa(e);
+        printf("\n");
+    } else {
+            e = jogar(e, l, c);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            e = bot_1(e);
+    }
+        return e;
 
+}
 
 
 
