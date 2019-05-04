@@ -1,3 +1,4 @@
+
 #ifndef PROJ_ESTADO_H
 #define PROJ_ESTADO_H
 
@@ -19,10 +20,11 @@ typedef struct estado {
     VALOR peca; // peça do jogador que vai jogar!
     VALOR grelha[8][8];
     char modo; // modo em que se está a jogar! 0-> manual, 1-> contra computador
+
 } ESTADO;
 
 
-
+ESTADO jogar_geral (ESTADO e, int l, int c) ;
 void printa(ESTADO);
 ESTADO reset(ESTADO e,char linha[]);
 void posvalidas (ESTADO e);
