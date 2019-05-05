@@ -11,20 +11,20 @@
 
 ESTADO automatico (ESTADO e,char linha[]) {
     int i = 1, j;
-    e.modo = 1;
     while (linha[i] == ' '){
         i++;
     if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
     else e.peca = VALOR_O;
 }
-    /*i++;
+    i++;
     while (linha[i] == ' '){
         i++;
         if (linha[i] == '1'){
-
-
-        }else break;
-    }*/
+            e.modo=1;
+        }else if (linha[i] == '2'){
+            e.modo =2;
+        }else e.modo = 3;
+    }
 
     for (i = 0; i < 8; i++) {
         for (j = 0; j < 8; j++) {
