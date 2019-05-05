@@ -20,8 +20,8 @@ int validaNorte (ESTADO e, int l, int c){
         if (l >= 2){
             while (i > 0 && e.grelha[i][j]==h){i--;}
             if (e.grelha[i][j]==e.peca) r=1;
-            }
         }
+    }
     return r;
 }
 int validaSul (ESTADO e, int l, int c){
@@ -36,8 +36,8 @@ int validaSul (ESTADO e, int l, int c){
         if(l <= 5){
             while (i < 7 && e.grelha[i][j]==h){i++;}
             if (e.grelha[i][j]==e.peca) r=1;
-            }
         }
+    }
     return r;
 }
 int validaOeste (ESTADO e, int l, int c){
@@ -52,7 +52,7 @@ int validaOeste (ESTADO e, int l, int c){
         if(c >= 2){
             while (j>0 && e.grelha[i][j]==h){j--;}
             if (e.grelha[i][j]==e.peca) r=1;}
-        }
+    }
     return r;
 }
 int validaEste (ESTADO e, int l, int c){
@@ -67,7 +67,7 @@ int validaEste (ESTADO e, int l, int c){
         if(c <= 5){
             while (j<7 && e.grelha[i][j]==h){j++;}
             if (e.grelha[i][j]==e.peca) r=1;}
-        }
+    }
     return r;
 }
 int validaNoroeste (ESTADO e, int l, int c){
@@ -159,6 +159,80 @@ int valida (ESTADO e, int l, int c) {
 
 
 
+
+
+ESTADO jogar (ESTADO e, int l, int c) {
+    int i, j;
+    VALOR h;
+    if (e.peca == VALOR_X) h = VALOR_O;
+    else if (e.peca == VALOR_O) h = VALOR_X;
+    else h = VAZIA;
+    if (valida(e, l, c) == 0);
+    else {
+        if (validaNorte(e, l, c)) {
+            i = l - 1;
+            j = c;
+            for (; e.grelha[i][j] == h; i--) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaSul(e, l, c)) {
+            i = l + 1;
+            j = c;
+            for (; e.grelha[i][j] == h; i++) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaOeste(e, l, c)) {
+            i = l;
+            j = c - 1;
+            for (; e.grelha[i][j] == h; j--) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaEste(e, l, c)) {
+            i = l;
+            j = c + 1;
+            for (; e.grelha[i][j] == h; j++) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaNoroeste(e, l, c)) {
+            i = l - 1;
+            j = c - 1;
+            for (; e.grelha[i][j] == h; i--, j--) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaNordeste(e, l, c)) {
+            i = l - 1;
+            j = c + 1;
+            for (; e.grelha[i][j] == h; i--, j++) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaSudoeste(e, l, c)) {
+            i = l + 1;
+            j = c - 1;
+            for (; e.grelha[i][j] == h; i++, j--) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        if (validaSudeste(e, l, c)) {
+            i = l + 1;
+            j = c + 1;
+            for (; e.grelha[i][j] == h; i++, j++) {
+                e.grelha[i][j] = e.peca;
+            }
+        }
+        e.grelha[l][c] = e.peca;
+        if (e.peca == VALOR_X) e.peca = VALOR_O;
+        else e.peca = VALOR_X;
+    }
+    return e;
+}
+
+
 //AUXILIARES PARA CONTAR NUMERO DE PEÇAS
 
 int numPecas_O (ESTADO e) {
@@ -238,7 +312,7 @@ void alterarStack (ESTADO e, STACK *s) {
 }
 
 ESTADO undo (ESTADO e, STACK *s){
-    if (s->sp != 0) {
+    if (s -> sp != 0) {
         s->sp--;
         e = s->estados[s->sp];
         printf("\n");
@@ -247,4 +321,3 @@ ESTADO undo (ESTADO e, STACK *s){
     }
     return e;
 }
-
