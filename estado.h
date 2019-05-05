@@ -19,7 +19,7 @@ Estrutura que armazena o estado do jogo
 typedef struct estado {
     VALOR peca; // peça do jogador que vai jogar!
     VALOR grelha[8][8];
-    char modo; // modo em que se está a jogar! 0-> manual, 1-> contra computador
+    char modo; // modo em que se está a jogar! 0-> manual, 1-> contra computador nivel 1 , 2 -> contra computador nivel 2 ,3 -> contra computador nivel 3
 
 } ESTADO;
 
@@ -29,7 +29,6 @@ void printa(ESTADO);
 ESTADO reset(ESTADO e,char linha[]);
 void posvalidas (ESTADO e);
 void sugestao (ESTADO e);
-ESTADO jogar (ESTADO e, int l, int c);
 ESTADO ler(ESTADO e, char s[]);
 void escrever(ESTADO e, char s[]);
 
