@@ -15,6 +15,7 @@ int validaNoroeste (ESTADO e, int l, int c);
 int validaNordeste (ESTADO e, int l, int c);
 int validaSudoeste (ESTADO e, int l, int c);
 int validaSudeste (ESTADO e, int l, int c);
+ESTADO jogar (ESTADO e, int l, int c);
 void posvalidas (ESTADO e);
 int numPecas_O (ESTADO e);
 int numPecas_X (ESTADO e);
