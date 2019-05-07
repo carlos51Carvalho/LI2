@@ -159,7 +159,45 @@ int valida (ESTADO e, int l, int c) {
 
 
 
+//AUXILIARES PARA CONTAR NUMERO DE PEÇAS
 
+int numPecas_O (ESTADO e) {
+    int i,j,num=0;
+    for(i=0;i<8;i++){
+        for(j=0;j<8;j++){
+            if (e.grelha[i][j]==VALOR_O) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+int numPecas_X (ESTADO e) {
+    int i,j,num=0;
+    for(i=0;i<8;i++){
+        for(j=0;j<8;j++){
+            if (e.grelha[i][j]==VALOR_X) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+
+
+//Auxiliares FINALIZAR O JOGO
+
+int nenhumaValida (ESTADO e){
+    int i,j,r=1;
+    for (i=0; i<8; i++){
+        for(j=0; j<8; j++){
+            if(valida(e,i,j)==1) r=0;
+        }
+    }
+    return r;
+}
 
 ESTADO jogar (ESTADO e, int l, int c) {
     int i, j;
@@ -229,48 +267,18 @@ ESTADO jogar (ESTADO e, int l, int c) {
         if (e.peca == VALOR_X) e.peca = VALOR_O;
         else e.peca = VALOR_X;
     }
+    if (nenhumaValida(e)==1) {
+        if (e.peca == VALOR_X) e.peca = VALOR_O;
+        else e.peca = VALOR_X;
+    }
+    if (finaliza(e) == 1) {
+        printa(e);
+        if (numPecas_O(e) > numPecas_X(e)) printf("O JOGADOR O GANHOU\n\n");
+        else if (numPecas_X(e) > numPecas_O(e)) printf("O JOGADOR X GANHOU!\n\n");
+        else printf("O JOGO EMPATOU\n\n");
+        exit(0);
+    }
     return e;
-}
-
-
-//AUXILIARES PARA CONTAR NUMERO DE PEÇAS
-
-int numPecas_O (ESTADO e) {
-    int i,j,num=0;
-    for(i=0;i<8;i++){
-        for(j=0;j<8;j++){
-            if (e.grelha[i][j]==VALOR_O) {
-                num++;
-            }
-        }
-    }
-    return num;
-}
-
-int numPecas_X (ESTADO e) {
-    int i,j,num=0;
-    for(i=0;i<8;i++){
-        for(j=0;j<8;j++){
-            if (e.grelha[i][j]==VALOR_X) {
-                num++;
-            }
-        }
-    }
-    return num;
-}
-
-
-
-//Auxiliares FINALIZAR O JOGO
-
-int nenhumaValida (ESTADO e){
-    int i,j,r=1;
-    for (i=0; i<8; i++){
-        for(j=0; j<8; j++){
-            if(valida(e,i,j)==1) r=0;
-        }
-    }
-    return r;
 }
 
 int nenhumaVazia (ESTADO e){
