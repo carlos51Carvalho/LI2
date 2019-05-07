@@ -24,43 +24,44 @@ int main() {
                 printf("\n");
                 printa(e);
                 printf("\n");
-                iniciarStack(e,&st);
+                iniciarStack(e, &st);
                 break;
             }
-            case 'A':{
-                e= automatico(e,linha);
+            case 'A': {
+                e = automatico(e, linha);
                 printf("\n");
                 printa(e);
                 printf("\n");
-                iniciarStack(e,&st);
+                iniciarStack(e, &st);
             }
             case 'J': {
                 int c1, c2;
-                sscanf(linha,"%c %d %d", &c ,&c1, &c2);
+                sscanf(linha, "%c %d %d", &c, &c1, &c2);
                 VALOR h;
-                if (e.peca==VALOR_X) h = VALOR_O;
-                else if(e.peca==VALOR_O) h = VALOR_X;
-                else h=VAZIA;
-                if (nenhumaValida(e)==1){printf("Nao tem jogadas possiveis. Perdeu a sua vez.\n\n"); e.peca=h;}
-                if (valida(e, c1, c2) == 0) printf("Jogada Invalida. Tente outra jogada. \n\n");
+                if (e.peca == VALOR_X) h = VALOR_O;
+                else if (e.peca == VALOR_O) h = VALOR_X;
+                else h = VAZIA;
+                if (valida(e, c1, c2) == 0) {
+                    printf("Jogada Invalida. Tente outra jogada. \n\n");
+                    if(nenhumaValida(e)){
+                          if (e.peca == VALOR_X) e.peca = VALOR_O;
+                          else e.peca = VALOR_X;
+                    }
+                }
                 else {
                     e = jogar_geral(e, c1, c2);
                     printf("\n");
                     printa(e);
                     printf("\n");
                 }
-                alterarStack(e,&st);
-                if(finaliza(e)==1) { if (numPecas_O(e)>numPecas_X(e)) printf("O JOGADOR O GANHOU\n\n");
-                    else if(numPecas_X(e)>numPecas_O(e)) printf("O JOGADOR X GANHOU!\n\n");
-                    else printf("O JOGO EMPATOU\n\n");
-                }
+                alterarStack(e, &st);
                 break;
             }
-            case 'S':{
+            case 'S': {
                 posvalidas(e);
                 break;
             }
-            case 'H':{
+            case 'H': {
                 sugestao(e);
                 break;
             }
@@ -68,17 +69,17 @@ int main() {
                 e = undo(e, &st);
                 break;
             }
-            case 'L':{
-                sscanf(linha,"%c %s", &c, s);
-                e =  ler(e,s);
-                iniciarStack(e,&st);
+            case 'L': {
+                sscanf(linha, "%c %s", &c, s);
+                e = ler(e, s);
+                iniciarStack(e, &st);
                 printa(e);
                 printf("\n");
                 break;
             }
-            case 'E':{
-                sscanf(linha,"%c %s", &c, s);
-                escrever(e,s);
+            case 'E': {
+                sscanf(linha, "%c %s", &c, s);
+                escrever(e, s);
                 break;
             }
             case 'Q':
@@ -89,6 +90,6 @@ int main() {
                 break;
             }
         }
-    }
-    while (toupper(linha[0]) != 'Q');
+    } while (toupper(linha[0]) != 'Q');
     return 0;
+}
