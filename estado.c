@@ -15,7 +15,7 @@ void printa(ESTADO e) {
     if (e.modo == 0) printf("Manual\n");
     else if (e.modo ==1 ) printf("Automatico 1 \n\n");
     else if (e.modo ==2 ) printf("Automatico 2 \n\n");
-    else printf("Automatico 2 \n\n");
+    else printf("Automatico 3 \n\n");
 
     printf("  0 1 2 3 4 5 6 7\n");
     for (int i = 0; i < 8; i++) {
