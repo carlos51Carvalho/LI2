@@ -27,6 +27,7 @@ typedef struct estado {
 ESTADO jogar_geral (ESTADO e, int l, int c) ;
 void printa(ESTADO);
 ESTADO reset(ESTADO e,char linha[]);
+ESTADO automatico (ESTADO e,char linha[]);
 void posvalidas (ESTADO e);
 void sugestao (ESTADO e);
 ESTADO ler(ESTADO e, char s[]);
