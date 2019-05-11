@@ -33,27 +33,15 @@ int main() {
                 printa(e);
                 printf("\n");
                 iniciarStack(e, &st);
+                break;
             }
             case 'J': {
                 int c1, c2;
                 sscanf(linha, "%c %d %d", &c, &c1, &c2);
-                VALOR h;
-                if (e.peca == VALOR_X) h = VALOR_O;
-                else if (e.peca == VALOR_O) h = VALOR_X;
-                else h = VAZIA;
-                if (valida(e, c1, c2) == 0) {
-                    printf("Jogada Invalida. Tente outra jogada. \n\n");
-                    if(nenhumaValida(e)){
-                          if (e.peca == VALOR_X) e.peca = VALOR_O;
-                          else e.peca = VALOR_X;
-                    }
-                }
-                else {
-                    e = jogar_geral(e, c1, c2);
-                    printf("\n");
-                    printa(e);
-                    printf("\n");
-                }
+                e = jogar_geral(e, c1, c2);
+                printf("\n");
+                printa(e);
+                printf("\n");
                 alterarStack(e, &st);
                 break;
             }
