@@ -24,6 +24,7 @@ int validaNorte (ESTADO e, int l, int c){
     }
     return r;
 }
+
 int validaSul (ESTADO e, int l, int c){
     int r=0,i=l+1,j=c;
     VALOR h;
@@ -205,7 +206,11 @@ ESTADO jogar (ESTADO e, int l, int c) {
     if (e.peca == VALOR_X) h = VALOR_O;
     else if (e.peca == VALOR_O) h = VALOR_X;
     else h = VAZIA;
-    if (valida(e, l, c) == 0);
+    if (valida(e, l, c) == 0) {
+        printf("Jogada Invalida.Tente outra jogada.");
+        return e;
+
+    }
     else {
         if (validaNorte(e, l, c)) {
             i = l - 1;
