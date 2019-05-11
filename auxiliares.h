@@ -6,6 +6,7 @@ typedef struct stack {
     ESTADO estados[64];
 }STACK;
 
+
 int valida (ESTADO e, int l, int c);
 int validaNorte (ESTADO e, int l, int c);
 int validaSul (ESTADO e, int l, int c);
