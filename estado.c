@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include "estado.h"
 #include <ctype.h>
@@ -12,10 +13,10 @@
 
 void printa(ESTADO e) {
     char c = ' ';
-    if (e.modo == 0) printf("Manual\n");
-    else if (e.modo ==1 ) printf("Automatico 1 \n\n");
-    else if (e.modo ==2 ) printf("Automatico 2 \n\n");
-    else printf("Automatico 3 \n\n");
+    if (e.modo == '0') printf("Manual\n");
+    else if (e.modo =='1' ) printf("Automatico 1 \n\n");
+    else if (e.modo =='2' ) printf("Automatico 2 \n\n");
+    else printf("Automatico 2 \n\n");
 
     printf("  0 1 2 3 4 5 6 7\n");
     for (int i = 0; i < 8; i++) {
@@ -42,15 +43,15 @@ void printa(ESTADO e) {
     }
     printf("X = %d  O = %d \n \n ", numPecas_X(e), numPecas_O(e));
 
-    if (e.peca== VALOR_X) printf("Jogador X\n");
-    else printf("Jogador O \n");
+    if (e.peca== VALOR_X) printf("Vez do jogador X\n");
+    else printf("Vez do jogador O \n");
 }
 
 
 
 ESTADO reset (ESTADO e,char linha[]) {
     int i=1, j;
-    e.modo = 0;
+    e.modo = '0';
     while (linha[i]==' ') {
         i++;
         if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
@@ -70,6 +71,37 @@ ESTADO reset (ESTADO e,char linha[]) {
     return e;
 }
 
+
+
+ESTADO automatico (ESTADO e,char linha[]) {
+    int i = 1, j;
+    while (linha[i] == ' '){
+        i++;
+        if (toupper(linha[i]) == 'X') e.peca = VALOR_X;
+        else e.peca = VALOR_O;
+    }
+    i++;
+    while (linha[i] == ' '){
+        i++;
+        if (linha[i] == '1'){
+            e.modo = '1';
+        }else if (linha[i] == '2'){
+            e.modo = '2';
+        }else e.modo = '3';
+    }
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            e.grelha[i][j] = VAZIA;
+        }
+    }
+
+    e.grelha[3][4] = VALOR_X;
+    e.grelha[4][3] = VALOR_X;
+    e.grelha[3][3] = VALOR_O;
+    e.grelha[4][4] = VALOR_O;
+    return e;
+}
 
 
 
@@ -114,21 +146,22 @@ void sugestao (ESTADO e) {
 
 
 ESTADO jogar_geral (ESTADO e, int l, int c) {
-    VALOR h;
-    h = e.peca;
-    if (e.modo == 0) {
+    if (e.modo == '0') {
         e = jogar(e, l, c);
         printf("\n");
         printa(e);
         printf("\n");
     } else {
+        if(valida(e,l,c)==0);
+        else {
             e = jogar(e, l, c);
             printf("\n");
             printa(e);
             printf("\n");
             e = bot_1(e);
+        }
     }
-        return e;
+    return e;
 
 }
 
@@ -140,8 +173,8 @@ ESTADO ler(ESTADO e, char s[]) {
 
     fscanf(reversi,"%c %c ", &s1,&s2 );
 
-    if (toupper(s1) == 'A') e.modo=1;
-    else e.modo=0;
+    if (toupper(s1) == 'A') e.modo='1';
+    else e.modo='0';
 
     if(toupper(s2) == 'X') e.peca = VALOR_X;
     else e.peca = VALOR_O;
@@ -169,16 +202,31 @@ ESTADO ler(ESTADO e, char s[]) {
 }
 
 void escrever(ESTADO e, char s[]) {
-    char s1,s2;
+    char s1,s2,s3;
+
     FILE *reversi = fopen(s, "w");
 
-    if (e.modo==1) s1 = 'A';
-    else s1 = 'M';
+    if (e.modo=='1') {
+        s1 = 'A';
+        s3 = '1'-48;
+    }
+    else if (e.modo=='2') {
+        s1 = 'A';
+        s3 = '2'-48;
+    }
+    else if (e.modo=='3') {
+        s1 = 'A';
+        s3 = '3'-48;
+    }
+    else {s1 = 'M';}
 
     if (e.peca == VALOR_X) s2 = 'X';
     else s2 = 'O';
 
-    fprintf(reversi,"%c %c \n", s1,s2 );
+    if(e.modo == '0')
+        fprintf(reversi,"%c %c \n", s1,s2 );
+    else
+        fprintf(reversi,"%c %c %d\n", s1,s2,s3 );
 
     for (int i = 0; i <8 ; i++)
     {
