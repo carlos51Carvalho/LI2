@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include "estado.h"
 #include <ctype.h>
@@ -16,7 +15,7 @@ void printa(ESTADO e) {
     if (e.modo == '0') printf("Manual\n");
     else if (e.modo =='1' ) printf("Automatico 1 \n\n");
     else if (e.modo =='2' ) printf("Automatico 2 \n\n");
-    else printf("Automatico 2 \n\n");
+    else printf("Automatico 3 \n\n");
 
     printf("  0 1 2 3 4 5 6 7\n");
     for (int i = 0; i < 8; i++) {
@@ -151,15 +150,33 @@ ESTADO jogar_geral (ESTADO e, int l, int c) {
         printf("\n");
         printa(e);
         printf("\n");
-    } else {
-        if(valida(e,l,c)==0);
-        else {
+    } else if(e.modo == '1') {
+        if(valida(e,l,c)!=0){
             e = jogar(e, l, c);
             printf("\n");
             printa(e);
             printf("\n");
             e = bot_1(e);
         }
+    }
+    else if (e.modo == '2') {
+        if (valida(e, l, c) != 0) {
+            e = jogar(e, l, c);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            e = bot2(e);
+        }
+    }
+    else if (e.modo == '3'){
+        if(valida(e,l,c)!=0){
+            e = jogar(e, l, c);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            e = bot3(e);
+        }
+
     }
     return e;
 
@@ -168,13 +185,19 @@ ESTADO jogar_geral (ESTADO e, int l, int c) {
 
 
 ESTADO ler(ESTADO e, char s[]) {
-    char s1,s2;
+    char s1,s2,s3;
     FILE *reversi = fopen(s, "r");
 
-    fscanf(reversi,"%c %c ", &s1,&s2 );
+    fscanf(reversi,"%c ", &s1 );
 
-    if (toupper(s1) == 'A') e.modo='1';
-    else e.modo='0';
+    if (toupper(s1) == 'M') {
+        e.modo='0';
+        fscanf(reversi,"%c ", &s2 );
+    }
+    else {
+        fscanf(reversi,"%c %c ", &s2, &s3 );
+        e.modo = s3;
+    }
 
     if(toupper(s2) == 'X') e.peca = VALOR_X;
     else e.peca = VALOR_O;
@@ -242,4 +265,3 @@ void escrever(ESTADO e, char s[]) {
     }
     fclose(reversi);
 }
-
