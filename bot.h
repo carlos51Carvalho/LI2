@@ -1,7 +1,3 @@
-
-
-// Created by carlos on 03-05-2019.
-//
 #include "estado.h"
 
 #ifndef PROJETO_BOT_H
@@ -21,6 +17,8 @@ typedef struct lista {
 
 
 ESTADO bot_1 (ESTADO e) ;
+ESTADO bot2 (ESTADO e);
+ESTADO bot3 (ESTADO e);
 void numposicoesval (ESTADO e, LISTA *p);
 
 
