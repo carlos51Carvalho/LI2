@@ -290,8 +290,7 @@ int nenhumaVazia (ESTADO e){
     int i,j,r=1;
     for(i=0; i<8 ; i++){
         for(j=0; j<8; j++){
-            if(e.grelha[i][i]==VALOR_X) r=0;
-            else if(e.grelha[i][i]==VALOR_O) r=0;
+            if(e.grelha[i][j]==VAZIA) r=0;
         }
     }
     return r;
