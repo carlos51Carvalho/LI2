@@ -27,7 +27,11 @@ ESTADO bot_1 (ESTADO e) {
 }
 
 
-
+/**
+ * Função que memoriza as posiçoes validas possiveis
+ * @param e recebe o estado atual do jogo.
+ * @param p lista de todas as posiçoes onde o bot pode jogar
+ */
 
 void numposicoesval (ESTADO e, LISTA *p){
     p->sp=0;
@@ -42,6 +46,14 @@ void numposicoesval (ESTADO e, LISTA *p){
         }
     }
 }
+
+
+
+/**
+ * Função que atribui valores as varias posiçoes do tabuleiro dde modo a que este possa ser avaliado pelo minmax.
+ * @param e estado atual do jogo.
+ * @return matriz de inteiros com as varias cotaçoes por posição.
+ */
 
 int tabuleiro(ESTADO e){
     int matriz[8][8] = {{100,-20,10,5,5,10,-20,100},
@@ -61,6 +73,19 @@ int tabuleiro(ESTADO e){
 
 
 }
+
+
+/**
+ * Função que avalia a qualidade de cada jogada, fazendo uma especie dum esquema em piramide avaliando conforme a profundidade, tendo em conta a melhor jogada possivel a realizar
+ * pelo jogador e assumindo que o adversário fará sempre a melhor para ele proprio.
+ * @param e estado atual do jogo.
+ * @param profundidade nivel a onde realizar o minmax em teste.
+ * @param original primeiro nivel de profundidade inserido.
+ * @param bot valor da peça do bot.
+ * @param p lista de todas as posiçoes onde o bot pode jogar
+ * @param final posiçao onde o bot vai jogar no fim:
+ * @return
+ */
 int minimax (ESTADO e, int profundidade, int original, VALOR bot, LISTA *p, PAR *final){
     int i,eval;
     LISTA s;
@@ -102,32 +127,40 @@ int minimax (ESTADO e, int profundidade, int original, VALOR bot, LISTA *p, PAR 
     }
 }
 
+/**
+ * Função que vai decidir a jogada contra o utilizador de profundidade média.
+ * @param e estado atual do jogo
+ * @return estado com a jogada do bot realizada.
+ */
 
 ESTADO bot2 (ESTADO e) {
     int l,c;
     VALOR h;
-    int max = 0, p = 0;
     LISTA s;
     PAR final;
     numposicoesval(e,&s);
     h = e.peca;
-    p = minimax(e,4,4,h,&s,&final);
+    minimax(e,3,3,h,&s,&final);
     e = jogar(e, (final).l,(final).c);
     return e;
 
 }
 
 
+/**
+ * Função que vai decidir a jogada contra o utilizador de profundidade mais alta.
+ * @param e estado atual do jogo
+ * @return estado com a jogada do bot realizada.
+ */
 
 ESTADO bot3 (ESTADO e) {
     int l,c;
     VALOR h;
-    int  p = 0;
     LISTA s;
     PAR final;
     numposicoesval(e,&s);
     h = e.peca;
-    p = minimax(e,8,8,h,&s,&final);
+    minimax(e,7,7,h,&s,&final);
     e = jogar(e, (final).l,(final).c);
     return e;
 
