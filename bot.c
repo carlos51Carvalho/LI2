@@ -134,16 +134,41 @@ int minimax (ESTADO e, int profundidade, int original, VALOR bot, LISTA *p, PAR 
  */
 
 ESTADO bot2 (ESTADO e) {
-    int l,c;
-    VALOR h;
-    LISTA s;
-    PAR final;
-    numposicoesval(e,&s);
-    h = e.peca;
-    minimax(e,3,3,h,&s,&final);
-    e = jogar(e, (final).l,(final).c);
+    int i,j,resx=0,resy=0;
+    for(i=0; i<8 ; i++){
+        for(j=0 ; j<8 ; j++){
+            if (valida(e, 0, 0)){
+                resx = 0;
+                resy = 0;
+            }
+            else if (valida(e, 7, 7)){
+                resx = 7;
+                resy = 7;
+            }
+            else if (valida(e, 0, 7)){
+                resx = 0;
+                resy = 7;
+            }
+            else if (valida(e, 7, 0)){
+                resx = 7;
+                resy = 0;
+            }
+            else if(quantas(e,i,j) > quantas(e,resx,resy)) {
+                resx=i;
+                resy=j;
+            }
+        }
+    }
+    int r=0;
+    for(i=0; i<8 ; i++) {
+        for (j = 0; j < 8; j++) {
+            if (i == resx && j == resy && r == 0) {
+                e=jogar(e,i,j);
+                r++;
+            }
+        }
+    }
     return e;
-
 }
 
 
