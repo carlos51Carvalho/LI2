@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include "bot.h"
 
-// exemplo de uma função para imprimir o estado (Tabuleiro)
-
 
 /**
  * @brief, para além do estado, o nosso ecrã de jogo também terá o modo em que nos encontramos, o numero de peças de cada jogador e a vez do jogador a jogar.
@@ -77,7 +75,12 @@ ESTADO reset (ESTADO e,char linha[]) {
     return e;
 }
 
-
+/**
+ * @brief , esta função irá dar reset ao nosso estado atual e criará um novo estado, que é o estado inicial de um possível novo jogo, onde o jogador terá como oponente um determinado bot.
+ * @param e , recebe o estado atual
+ * @param linha , procurará a indicação do jogador que começará a jogar e a dificuldade do jogador adversário (bot) .
+ * @return , a função retornará o estado inicial do jogo.
+ */
 
 ESTADO automatico (ESTADO e,char linha[]) {
     int i = 1, j;
@@ -130,75 +133,9 @@ void posvalidas (ESTADO e){
         printf("\n");
     }
 }
-/**
- * @brief , esta função tem como objetivo encontrar o número de peças que o jogador ao jogar na posição dada consegue comer.
- * Para tal verificamos a validade da jogada para cada uma das direções e ao longo do vetor de cada direção conta quantas peças come, através da criação de uma variável que será sucessivamente incrementada.
- * @param e , recebe o estado atual do jogo.
- * @param i , recebe uma coordenada de linha.
- * @param j , recebe uma coordenada de coluna.
- * @return , retorna o número de peças que o player consegue comer ao jogar nessa posição.
- */
-int quantas (ESTADO e, int i, int j) {
-    int temp=0;
-    int l,c;
-    VALOR h;
-    if (e.peca == VALOR_X) h = VALOR_O;
-    else if (e.peca == VALOR_O) h = VALOR_X;
-    else h = VAZIA;
-    if (validaNorte(e, i, j)) {
-        l = i-1;
-        for (; e.grelha[l][j] == h; l--) {
-            temp++;
-        }
-    }
-    if (validaSul(e, i, j)) {
-        l = i+1;
-        for (; e.grelha[l][j] == h; l++) {
-            temp++;
-        }
-    }
-    if (validaOeste(e, i, j)) {
-        c = j-1;
-        for (; e.grelha[i][c] == h; c--) {
-            temp++;
-        }
-    }
-    if (validaEste(e, i, j)) {
-        c = j+1;
-        for (; e.grelha[i][c] == h; c++) {
-            temp++;
-        }
-    }
-    if (validaSudeste(e, i, j)) {
-        l = i+1;
-        c = j+1;
-        for (; e.grelha[l][c] == h; l++,c++) {
-            temp++;
-        }
-    }
-    if (validaSudoeste(e, i, j)) {
-        l = i+1;
-        c = i-1;
-        for (; e.grelha[l][c] == h; l++,c--) {
-            temp++;
-        }
-    }
-    if (validaNordeste(e, i, j)) {
-        l = i-1;
-        c = j+1;
-        for (; e.grelha[l][c] == h; l--,c++) {
-            temp++;
-        }
-    }
-    if (validaNoroeste(e, i, j)) {
-        l = i-1;
-        c = j-1;
-        for (; e.grelha[l][c] == h; l--,c--) {
-            temp++;
-        }
-    }
-    return temp;
-}
+
+
+
 
 /**
  * @brief , esta função irá printar um "?" na posição que será a sugestão, essa sugestão será preferencialmente um dos quatro cantos.
@@ -226,8 +163,8 @@ void sugestao (ESTADO e){
                 resy = 0;
             }
             else if(quantas(e,i,j) > quantas(e,resx,resy)) {
-                      resx=i;
-                      resy=j;
+                resx=i;
+                resy=j;
             }
         }
     }
@@ -268,9 +205,8 @@ ESTADO jogar_geral (ESTADO e, int l, int c) {
         printf("\n");
         printa(e);
         printf("\n");
-    } else {
-        if(valida(e,l,c)==0);
-        else {
+    } else if(e.modo == '1') {
+        if(valida(e,l,c)!=0){
             e = jogar(e, l, c);
             printf("\n");
             printa(e);
@@ -278,11 +214,38 @@ ESTADO jogar_geral (ESTADO e, int l, int c) {
             e = bot_1(e);
         }
     }
+    else if (e.modo == '2') {
+        if (valida(e, l, c) != 0) {
+            e = jogar(e, l, c);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            e = bot2(e);
+        }
+    }
+    else if (e.modo == '3'){
+        if(valida(e,l,c)!=0){
+            e = jogar(e, l, c);
+            printf("\n");
+            printa(e);
+            printf("\n");
+            e = bot3(e);
+        }
+
+    }
     return e;
 
 }
 
 
+
+
+/**
+ * função que lê um jogo guardado anteriormente no formato txt.
+ * @param e estado corrente do jogo.
+ * @param s ficheiro texto de onde se vai extrair a informação para transformar num estado
+ * @return estado do jogo lido, podendo continuar um jogo pausado.
+ */
 
 ESTADO ler(ESTADO e, char s[]) {
     char s1,s2;
@@ -317,6 +280,13 @@ ESTADO ler(ESTADO e, char s[]) {
     return e;
 
 }
+
+
+/**
+ * Função que imprime dum estado um ficheiro texto.
+ * @param e recebe o estado a guardar ( o estado corrente do jogo).
+ * @param s recebe o nome do ficheiro onde guardar o estado (termiando em txt).
+ */
 
 void escrever(ESTADO e, char s[]) {
     char s1,s2,s3;
