@@ -8,7 +8,11 @@
 
 
 
-
+/**
+ * @brief , função do nosso primeiro bot, cuja estratégia é o mesmo jogar a primeira jogada válida que encontrar.
+ * @param e , recebe o estado atual do jogo.
+ * @return  , retornará o estado após o bot ter jogado.
+ */
 ESTADO bot_1 (ESTADO e) {
     int i,j,r = 0;
     for(i=0;i<8;i++){
