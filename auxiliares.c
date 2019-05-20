@@ -7,7 +7,18 @@
 
 
 //AUXILIARES VALIDA E JOGAR
-
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Norte.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a cima esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Norte.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Norte e 0 se for inválida nessa direção.
+ */
 int validaNorte (ESTADO e, int l, int c){
     int r=0,i=l-1,j=c;
     VALOR h;
@@ -25,6 +36,18 @@ int validaNorte (ESTADO e, int l, int c){
     return r;
 }
 
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Sul.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a baixo esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Sul.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Sul e 0 se for inválida nessa direção.
+ */
 int validaSul (ESTADO e, int l, int c){
     int r=0,i=l+1,j=c;
     VALOR h;
@@ -41,6 +64,18 @@ int validaSul (ESTADO e, int l, int c){
     }
     return r;
 }
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Oeste.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Oeste esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Oeste.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Oeste e 0 se for inválida nessa direção.
+ */
 int validaOeste (ESTADO e, int l, int c){
     int r=0,i=l,j=c-1;
     VALOR h;
@@ -56,6 +91,18 @@ int validaOeste (ESTADO e, int l, int c){
     }
     return r;
 }
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Este.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Este esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Este.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Este e 0 se for inválida nessa direção.
+ */
 int validaEste (ESTADO e, int l, int c){
     int r=0,i=l,j=c+1;
     VALOR h;
@@ -71,6 +118,18 @@ int validaEste (ESTADO e, int l, int c){
     }
     return r;
 }
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Noroeste.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Noroeste esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Noroeste.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Noroeste e 0 se for inválida nessa direção.
+ */
 int validaNoroeste (ESTADO e, int l, int c){
     int r=0,i=l-1,j=c-1;
     VALOR h;
@@ -89,6 +148,18 @@ int validaNoroeste (ESTADO e, int l, int c){
     }
     return r;
 }
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Nordeste.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Nordeste esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Nordeste.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Nordeste e 0 se for inválida nessa direção.
+ */
 int validaNordeste (ESTADO e, int l, int c){
     int r=0,i=l-1,j=c+1;
     VALOR h;
@@ -107,6 +178,18 @@ int validaNordeste (ESTADO e, int l, int c){
     }
     return r;
 }
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Sudoeste.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Sudoeste esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Sudoeste.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Sudoeste e 0 se for inválida nessa direção.
+ */
 int validaSudoeste (ESTADO e, int l, int c){
     int r=0,i=l+1,j=c-1;
     VALOR h;
@@ -125,6 +208,19 @@ int validaSudoeste (ESTADO e, int l, int c){
     }
     return r;
 }
+
+/**
+ * @brief , esta função irá nos indicar se a jogada é ou não válida na direçáo Sudeste.
+ * Caso a posição onde queremos jogar já esteja ocupada, a mesma será inválida.
+ * Caso a posição imediatamente a Sudeste esteja ocupada por uma peça igual á e.peca, a jogada será inválida.
+ * Caso contrário, iremos percorrer a matriz através do vetor na direção Sudeste.
+ * Caso seja encontrado o fim da matriz a jogada é inválida.
+ * Se antes do fim da matriz encontrarmos uma posição ocupada por e.peca, a jogada será válida.
+ * @param e, a função recebe o estado atual do jogo.
+ * @param l, recebe a linha da posição a testar.
+ * @param c, recebe a coluna da posição a testar.
+ * @return , retornará 1 se a jogada for válida na direção Sudeste e 0 se for inválida nessa direção.
+ */
 int validaSudeste (ESTADO e, int l, int c){
     int r=0,i=l+1,j=c+1;
     VALOR h;
@@ -144,6 +240,13 @@ int validaSudeste (ESTADO e, int l, int c){
     return r;
 }
 
+/**
+ * @brief , a função irá através das funções anteriores verificar se a posição é válida para alguma das possíveis direções.
+ * @param e , a função recebe o estado atual do jogo.
+ * @param l , recebe a linha da posição a testar.
+ * @param c , recebe a coluna da posição a testar.
+ * @return , a função retornará 1 se a posição for válida e 0 caso contrário.
+ */
 int valida (ESTADO e, int l, int c) {
     int r;
     if     (validaNorte(e,l,c)==1) r=1;
@@ -161,7 +264,11 @@ int valida (ESTADO e, int l, int c) {
 
 
 //AUXILIARES PARA CONTAR NUMERO DE PEÇAS
-
+/**
+ * @brief , a função irá percorrer a matriz toda através de dois ciclos e contará o número de peças O.
+ * @param e , a função recebe o estado atual do jogo.
+ * @return , retornará o número de peças O em jogo.
+ */
 int numPecas_O (ESTADO e) {
     int i,j,num=0;
     for(i=0;i<8;i++){
@@ -174,6 +281,11 @@ int numPecas_O (ESTADO e) {
     return num;
 }
 
+/**
+ * @brief , a função irá percorrer a matriz toda através de dois ciclos e contará o número de peças X.
+ * @param e , a função recebe o estado atual do jogo.
+ * @return , retornará o número de peças X em jogo.
+ */
 int numPecas_X (ESTADO e) {
     int i,j,num=0;
     for(i=0;i<8;i++){
@@ -187,9 +299,11 @@ int numPecas_X (ESTADO e) {
 }
 
 
-
-//Auxiliares FINALIZAR O JOGO
-
+/**
+ * @brief, a função irá percorrer a matriz toda através de dois ciclos for para verificar se ainda existem jogadas válidas.
+ * @param e , recebe o estado atual do jogo.
+ * @return , retornará 0 se ainda existir pelo menos uma jogada válida, e retornará 1 caso contrário.
+ */
 int nenhumaValida (ESTADO e){
     int i,j,r=1;
     for (i=0; i<8; i++){
@@ -200,6 +314,15 @@ int nenhumaValida (ESTADO e){
     return r;
 }
 
+/**
+ * @brief , a função irá jogar na posição dada, se ela fôr válida.
+ * Se a jogada fôr inválida , a função retornará o mesmo estado.
+ * Caso contrário, a função irá alterar as peças adversárias para peças e.peca nas direções em que fôr válida.
+ * @param e , recebe o estado atual do jogo.
+ * @param l , recebe a linha da posição onde se pretende jogar.
+ * @param c , recebe a coluna da posição onde se pretende jogar.
+ * @return , retornará o estado que resulta dessa jogada efetuada.
+ */
 ESTADO jogar (ESTADO e, int l, int c) {
     int i, j;
     VALOR h;
@@ -209,7 +332,6 @@ ESTADO jogar (ESTADO e, int l, int c) {
     if (valida(e, l, c) == 0) {
         printf("Jogada Invalida.Tente outra jogada.");
         return e;
-
     }
     else {
         if (validaNorte(e, l, c)) {
@@ -286,6 +408,11 @@ ESTADO jogar (ESTADO e, int l, int c) {
     return e;
 }
 
+/**
+ * @brief , a função percorrerá a matriz toda através de dois ciclos for , para procurar peças Vazias.
+ * @param e , recebe o estado atual do jogo.
+ * @return  , retornará 1 caso já não hajam posições Vazias em campo, 0 caso contrário.
+ */
 int nenhumaVazia (ESTADO e){
     int i,j,r=1;
     for(i=0; i<8 ; i++){
@@ -296,6 +423,15 @@ int nenhumaVazia (ESTADO e){
     return r;
 }
 
+/**
+ * @brief, a função irá testar se o jogo já está finalizado,
+ * Primeiro, verificará se algum dos dois jogadores não tem peças em campo.
+ * Segundo, verificará se algum dos jogadores tem jogadas válidas.
+ * Terceiro irá testar se todas as peças em campo já estão ocupadas.
+ * Caso alguma destas condições se verifique, o jogo está finalizado.
+ * @param e , recebe o estado atual do jogo.
+ * @return  , retornará 1 caso seja para finalizar o jogo, 0 caso ainda não esteja finalizado.
+ */
 int finaliza (ESTADO e) {
     int r = 0;
     VALOR h;
@@ -312,17 +448,33 @@ int finaliza (ESTADO e) {
     if (nenhumaVazia(e)==1) r=1;
     return r;
 }
-
+/**
+ * @brief , função que irá inicializar a stack, onde o primeiro estado de jogo a ser guardado é o ESTADO e, atual.
+ * @param e , o estado atual do jogo.
+ * @param s , recebe uma stack onde irá guardar os estados do jogo.
+ */
 void iniciarStack (ESTADO e,STACK *s) {
     s -> sp = 0;
     s -> estados[s->sp] = e;
 }
 
+/**
+ * @brief , função que irá alterar a stack conforme o jogo avance, incrementando o stackpointer e guardando o estado nessa posição do array.
+ * @param e , recebe o estado atual do jogo.
+ * @param s , recebe a stack onde serão guardados os estados do jogo.
+ */
 void alterarStack (ESTADO e, STACK *s) {
     s->sp++;
     s->estados[s->sp] = e;
 }
 
+/**
+ * @brief , função que irá devolver o estado anterior do jogo.
+ * Para isso decrementamos o sp , e vamos a essa posição do array buscar o estado a devolver.
+ * @param e , recebe o estado atual do jogo.
+ * @param s , recebe a stack onde se encontram os estados de jogo.
+ * @return  , retornará o estado anterior ao estado atual.
+ */
 ESTADO undo (ESTADO e, STACK *s){
     if (s -> sp != 0) {
         s->sp--;
@@ -333,3 +485,6 @@ ESTADO undo (ESTADO e, STACK *s){
     }
     return e;
 }
+
+
+
