@@ -8,8 +8,10 @@
 // exemplo de uma função para imprimir o estado (Tabuleiro)
 
 
-
-
+/**
+ * @brief, para além do estado, o nosso ecrã de jogo também terá o modo em que nos encontramos, o numero de peças de cada jogador e a vez do jogador a jogar.
+ * @param e , a função recebe o estado atual, que será printado.
+ */
 void printa(ESTADO e) {
     char c = ' ';
     if (e.modo == '0') printf("Manual\n");
@@ -47,7 +49,12 @@ void printa(ESTADO e) {
 }
 
 
-
+/**
+ * @brief , esta função irá dar reset ao nosso estado atual e criará um novo estado, que é o estado inicial de um possível novo jogo.
+ * @param e , recebe o estado atual
+ * @param linha , procurará a indicação do jogador que começará a jogar.
+ * @return , a função retornará o estado inicial do jogo.
+ */
 ESTADO reset (ESTADO e,char linha[]) {
     int i=1, j;
     e.modo = '0';
@@ -105,7 +112,10 @@ ESTADO automatico (ESTADO e,char linha[]) {
 
 
 
-
+/**
+ * @brief , a função percorre a matriz toda através de dois ciclos "for" e irá dar print do estado, com "." nas jogadas válidas.
+ * @param e , a função recebe um estado para através dele encontrar as posições válidas para o jogador a jogar.
+ */
 void posvalidas (ESTADO e){
     int l,c;
     printf("  0 1 2 3 4 5 6 7\n");
@@ -120,21 +130,118 @@ void posvalidas (ESTADO e){
         printf("\n");
     }
 }
+/**
+ * @brief , esta função tem como objetivo encontrar o número de peças que o jogador ao jogar na posição dada consegue comer.
+ * Para tal verificamos a validade da jogada para cada uma das direções e ao longo do vetor de cada direção conta quantas peças come, através da criação de uma variável que será sucessivamente incrementada.
+ * @param e , recebe o estado atual do jogo.
+ * @param i , recebe uma coordenada de linha.
+ * @param j , recebe uma coordenada de coluna.
+ * @return , retorna o número de peças que o player consegue comer ao jogar nessa posição.
+ */
+int quantas (ESTADO e, int i, int j) {
+    int temp=0;
+    int l,c;
+    VALOR h;
+    if (e.peca == VALOR_X) h = VALOR_O;
+    else if (e.peca == VALOR_O) h = VALOR_X;
+    else h = VAZIA;
+    if (validaNorte(e, i, j)) {
+        l = i-1;
+        for (; e.grelha[l][j] == h; l--) {
+            temp++;
+        }
+    }
+    if (validaSul(e, i, j)) {
+        l = i+1;
+        for (; e.grelha[l][j] == h; l++) {
+            temp++;
+        }
+    }
+    if (validaOeste(e, i, j)) {
+        c = j-1;
+        for (; e.grelha[i][c] == h; c--) {
+            temp++;
+        }
+    }
+    if (validaEste(e, i, j)) {
+        c = j+1;
+        for (; e.grelha[i][c] == h; c++) {
+            temp++;
+        }
+    }
+    if (validaSudeste(e, i, j)) {
+        l = i+1;
+        c = j+1;
+        for (; e.grelha[l][c] == h; l++,c++) {
+            temp++;
+        }
+    }
+    if (validaSudoeste(e, i, j)) {
+        l = i+1;
+        c = i-1;
+        for (; e.grelha[l][c] == h; l++,c--) {
+            temp++;
+        }
+    }
+    if (validaNordeste(e, i, j)) {
+        l = i-1;
+        c = j+1;
+        for (; e.grelha[l][c] == h; l--,c++) {
+            temp++;
+        }
+    }
+    if (validaNoroeste(e, i, j)) {
+        l = i-1;
+        c = j-1;
+        for (; e.grelha[l][c] == h; l--,c--) {
+            temp++;
+        }
+    }
+    return temp;
+}
 
-
-
-void sugestao (ESTADO e) {
-    int i,j,r = 0;
+/**
+ * @brief , esta função irá printar um "?" na posição que será a sugestão, essa sugestão será preferencialmente um dos quatro cantos.
+ * Sendo que se não for possivel jogar nos cantos esta função encontrará a posição em que é possivel comer mais peças do adversário. Através de percorrer matriz por dois ciclos for.
+ * @param e , recebe o estado atual do jogo.
+ */
+void sugestao (ESTADO e){
+    int i,j,resx=0,resy=0;
+    for(i=0; i<8 ; i++){
+        for(j=0 ; j<8 ; j++){
+            if (valida(e, 0, 0)){
+                resx = 0;
+                resy = 0;
+            }
+            else if (valida(e, 7, 7)){
+                resx = 7;
+                resy = 7;
+            }
+            else if (valida(e, 0, 7)){
+                resx = 0;
+                resy = 7;
+            }
+            else if (valida(e, 7, 0)){
+                resx = 7;
+                resy = 0;
+            }
+            else if(quantas(e,i,j) > quantas(e,resx,resy)) {
+                      resx=i;
+                      resy=j;
+            }
+        }
+    }
+    int r=0;
     printf("  0 1 2 3 4 5 6 7\n");
-    for(i=0;i<8;i++){
-        for(j=0;j<8;j++){
-            if(j==0) printf("%d ",i);
-            if (valida(e,i,j) && r == 0){
+    for(i=0; i<8 ; i++) {
+        for (j = 0; j < 8; j++) {
+            if (j == 0) printf("%d ", i);
+            if (i == resx && j == resy && r == 0) {
                 printf("? ");
                 r++;
             }
-            else if (e.grelha[i][j]==VALOR_X) printf("X ");
-            else if(e.grelha[i][j]==VALOR_O) printf("O ");
+            else if (e.grelha[i][j] == VALOR_X) printf("X ");
+            else if (e.grelha[i][j] == VALOR_O) printf("O ");
             else printf("- ");
         }
         printf("\n");
@@ -144,39 +251,32 @@ void sugestao (ESTADO e) {
 
 
 
+
+
+/**
+ * @brief Esta função irá jogar e fazer o jogo avançar, se nos encontrarmos no e.modo 0, o estado irá avançar conforme o jogador X ou O jogue.
+          Caso o e.modo seja diferente de 0, primeiro o jogador joga na posição que pretender (l,c) e seguidamente jogará o bot, e o jogo avançará dessa forma.
+ * @param e , a função recebe o estado atual.
+ * @param l , recebe uma linha, da posição onde se pretende jogar.
+ * @param c , recebe uma coluna, da posição onde se pretende jogar.
+ * @return  , retorna o estado após se ter jogado na posição dada.
+ */
+
 ESTADO jogar_geral (ESTADO e, int l, int c) {
     if (e.modo == '0') {
         e = jogar(e, l, c);
         printf("\n");
         printa(e);
         printf("\n");
-    } else if(e.modo == '1') {
-        if(valida(e,l,c)!=0){
+    } else {
+        if(valida(e,l,c)==0);
+        else {
             e = jogar(e, l, c);
             printf("\n");
             printa(e);
             printf("\n");
             e = bot_1(e);
         }
-    }
-    else if (e.modo == '2') {
-        if (valida(e, l, c) != 0) {
-            e = jogar(e, l, c);
-            printf("\n");
-            printa(e);
-            printf("\n");
-            e = bot2(e);
-        }
-    }
-    else if (e.modo == '3'){
-        if(valida(e,l,c)!=0){
-            e = jogar(e, l, c);
-            printf("\n");
-            printa(e);
-            printf("\n");
-            e = bot3(e);
-        }
-
     }
     return e;
 
@@ -185,19 +285,13 @@ ESTADO jogar_geral (ESTADO e, int l, int c) {
 
 
 ESTADO ler(ESTADO e, char s[]) {
-    char s1,s2,s3;
+    char s1,s2;
     FILE *reversi = fopen(s, "r");
 
-    fscanf(reversi,"%c ", &s1 );
+    fscanf(reversi,"%c %c ", &s1,&s2 );
 
-    if (toupper(s1) == 'M') {
-        e.modo='0';
-        fscanf(reversi,"%c ", &s2 );
-    }
-    else {
-        fscanf(reversi,"%c %c ", &s2, &s3 );
-        e.modo = s3;
-    }
+    if (toupper(s1) == 'A') e.modo='1';
+    else e.modo='0';
 
     if(toupper(s2) == 'X') e.peca = VALOR_X;
     else e.peca = VALOR_O;
@@ -265,3 +359,4 @@ void escrever(ESTADO e, char s[]) {
     }
     fclose(reversi);
 }
+
