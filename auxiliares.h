@@ -26,4 +26,5 @@ int finaliza (ESTADO e);
 void iniciarStack (ESTADO e,STACK *s);
 void alterarStack (ESTADO e, STACK *s);
 ESTADO undo (ESTADO e, STACK *s);
+int quantas (ESTADO e, int i, int j);
 #endif //PROJ_AUXILIARES_H
