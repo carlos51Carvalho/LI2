@@ -486,5 +486,73 @@ ESTADO undo (ESTADO e, STACK *s){
     return e;
 }
 
-
+/**
+ * @brief , esta função tem como objetivo encontrar o número de peças que o jogador ao jogar na posição dada consegue comer.
+ * Para tal verificamos a validade da jogada para cada uma das direções e ao longo do vetor de cada direção conta quantas peças come, através da criação de uma variável que será sucessivamente incrementada.
+ * @param e , recebe o estado atual do jogo.
+ * @param i , recebe uma coordenada de linha.
+ * @param j , recebe uma coordenada de coluna.
+ * @return , retorna o número de peças que o player consegue comer ao jogar nessa posição.
+ */
+int quantas (ESTADO e, int i, int j) {
+    int temp=0;
+    int l,c;
+    VALOR h;
+    if (e.peca == VALOR_X) h = VALOR_O;
+    else if (e.peca == VALOR_O) h = VALOR_X;
+    else h = VAZIA;
+    if (validaNorte(e, i, j)) {
+        l = i-1;
+        for (; e.grelha[l][j] == h; l--) {
+            temp++;
+        }
+    }
+    if (validaSul(e, i, j)) {
+        l = i+1;
+        for (; e.grelha[l][j] == h; l++) {
+            temp++;
+        }
+    }
+    if (validaOeste(e, i, j)) {
+        c = j-1;
+        for (; e.grelha[i][c] == h; c--) {
+            temp++;
+        }
+    }
+    if (validaEste(e, i, j)) {
+        c = j+1;
+        for (; e.grelha[i][c] == h; c++) {
+            temp++;
+        }
+    }
+    if (validaSudeste(e, i, j)) {
+        l = i+1;
+        c = j+1;
+        for (; e.grelha[l][c] == h; l++,c++) {
+            temp++;
+        }
+    }
+    if (validaSudoeste(e, i, j)) {
+        l = i+1;
+        c = i-1;
+        for (; e.grelha[l][c] == h; l++,c--) {
+            temp++;
+        }
+    }
+    if (validaNordeste(e, i, j)) {
+        l = i-1;
+        c = j+1;
+        for (; e.grelha[l][c] == h; l--,c++) {
+            temp++;
+        }
+    }
+    if (validaNoroeste(e, i, j)) {
+        l = i-1;
+        c = j-1;
+        for (; e.grelha[l][c] == h; l--,c--) {
+            temp++;
+        }
+    }
+    return temp;
+}
 
