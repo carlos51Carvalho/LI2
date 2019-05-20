@@ -128,9 +128,9 @@ int minimax (ESTADO e, int profundidade, int original, VALOR bot, LISTA *p, PAR 
 }
 
 /**
- * Função que vai decidir a jogada contra o utilizador de profundidade média.
- * @param e estado atual do jogo
- * @return estado com a jogada do bot realizada.
+ * Função que irá decidir a jogada que o bot irá fazer e realizá-la, escolherá preferencialmente os cantos ou se não for possível, a posicção que o permite comer mais peças do adversário.
+ * @param e , estado atual do jogo
+ * @return , estado com a jogada do bot realizada.
  */
 
 ESTADO bot2 (ESTADO e) {
